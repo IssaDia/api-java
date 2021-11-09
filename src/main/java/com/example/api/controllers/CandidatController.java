@@ -38,14 +38,9 @@ public class CandidatController {
     }
 
     @PostMapping(value= "/")
-    public ResponseEntity<Candidat> saveCandidat(@Valid @RequestBody Candidat candidat, BindingResult bindingResult) {
-        if(bindingResult.hasErrors()) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, bindingResult.toString());
-        }
-        else {
+    public ResponseEntity<Candidat> saveCandidat(@Valid @RequestBody Candidat candidat) {
             candidatRepository.save(candidat);
             return new ResponseEntity<Candidat>(candidat, HttpStatus.CREATED);
-        }
     }
     @PutMapping(value= "/{candidat}")
     public ResponseEntity<Candidat> update(@PathVariable(name= "candidat", required = true) Candidat candidat,

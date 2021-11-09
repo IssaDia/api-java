@@ -1,6 +1,10 @@
 package com.example.api.models;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
+import javax.validation.constraints.*;
 import java.util.Date;
 
 @Entity
@@ -11,22 +15,35 @@ public class Candidat {
     private Long id;
 
     @Column(name="nom")
+    @NotNull(message="Le champ nom ne peut pas être null")
+    @NotBlank(message="Le champ nom ne peut pas être vide")
     private String nom;
 
     @Column(name="prenom")
+    @NotNull(message="Le champ prénom ne peut pas être null")
+    @NotBlank(message="Le champ prénom ne peut pas être vide")
     private String prenom;
 
     @Column(name="dateNaissance")
+    @NotNull(message="Le champ naissance ne peut pas être null")
+    @DateTimeFormat(pattern="dd-mm-yyyy")
+    @JsonFormat(pattern="dd-mm-yyyy")
     @Temporal(TemporalType.DATE)
     private Date dateNaissance;
 
     @Column(name="adresse")
+    @NotNull(message="Le champ adresse ne peut pas être null")
+    @NotBlank(message="Le champ adresse ne peut pas être vide")
     private String adresse;
 
     @Column(name="ville")
+    @NotNull(message="Le champ ville ne peut pas être null")
+    @NotBlank(message="Le champ ville ne peut pas être vide")
     private String ville;
 
     @Column(name="codePostal")
+    @NotNull(message="Le champ code postal ne peut pas être null")
+    @NotBlank(message="Le champ code postal ne peut pas être vide")
     private String codePostal;
 
     public Candidat () {
