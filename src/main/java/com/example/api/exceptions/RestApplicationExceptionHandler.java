@@ -1,9 +1,11 @@
 package com.example.api.exceptions;
 
 import com.example.api.models.ErrorValidation;
+import com.fasterxml.jackson.databind.exc.MismatchedInputException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -28,5 +30,12 @@ public class RestApplicationExceptionHandler extends ResponseEntityExceptionHand
             errors.add(new ErrorValidation(error.getField(), error.getDefaultMessage()));
         }
         return this.handleExceptionInternal(ex, errors, headers, status, request);
+    }
+
+    @Override
+    protected ResponseEntity<Object> handleHttpMessageNotReadable(HttpMessageNotReadableException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
+        String path = ((MismatchedInputException)ex.getCause()).getPath().toString();
+        ErrorValidation error = new ErrorValidation(path, ex.getCause().getMessage());
+        return this.handleExceptionInternal(ex, error, headers, status, request);
     }
 }

@@ -27,7 +27,7 @@ public class Candidat {
     @Column(name="dateNaissance")
     @NotNull(message="Le champ naissance ne peut pas être null")
     @DateTimeFormat(pattern="dd-mm-yyyy")
-    @JsonFormat(pattern="dd-mm-yyyy")
+    @JsonFormat(pattern="yyyy-mm-dd")
     @Temporal(TemporalType.DATE)
     private Date dateNaissance;
 
